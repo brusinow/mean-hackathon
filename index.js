@@ -38,6 +38,7 @@ app.get('/', function(req, res) {
            // }
         }
     })
+    res.send('hey sup hello');
 });
 
 app.listen(3000);
