@@ -1,0 +1,25 @@
+{
+  "name": "mean-hackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brusinow/mean-hackathon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brusinow/mean-hackathon/issues"
+  },
+  "homepage": "https://github.com/brusinow/mean-hackathon#readme",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "ejs": "^2.4.2",
+    "express": "^4.13.4",
+    "express-ejs-layouts": "^2.1.0"
+  }
+}
