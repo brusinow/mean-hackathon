@@ -2,14 +2,17 @@ var express= require('express');
 var request = require('request');
 var cheerio = require('cheerio');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var Event = require('./models/event');
 var app = express();
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/3000');
+mongoose.connect('mongodb://localhost/fivethings');
+
+
 
 app.get('/', function(req, res) {
     url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
@@ -31,8 +34,8 @@ app.get('/', function(req, res) {
 
             $('.calendar-post').map(function(i, value) {
               var str = $(value).find('.calendar-post-left .calendar-post-title a').text();
-              // var date = 
-              console.log(str);
+              var date = $(value).find('.calendar-post-date').text();
+              // console.log(str);
             });
 
 
