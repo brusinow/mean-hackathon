@@ -47,7 +47,11 @@ app.get('/', function(req, res) {
            // }
         }
     })
-    res.send('');
+    res.send('haha'); 
+});
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'static/index.html'));
 });
 
 app.listen(3000);
