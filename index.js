@@ -8,7 +8,6 @@ app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
-
 var mongoose = require('mongoose');
 mongoose.connect('mongodb://localhost/3000');
 
@@ -38,7 +37,7 @@ app.get('/', function(req, res) {
            // }
         }
     })
-    res.send('hey sup hello');
+    res.send('');
 });
 
 app.listen(3000);
