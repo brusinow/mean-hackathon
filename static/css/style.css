@@ -1,3 +1,33 @@
+/*navbar*/
+#bolder {
+  font-weight: 700;
+  font-family: 'Rajdhani', serif;
+  font-size: 30px;
+  color: goldenrod;
+}
+
+.center {
+  text-align: center;
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
 body {
-  color: blue;
+  /* Margin bottom by footer height */
+  margin-bottom: 60px;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+.footer p {
+  margin-top: 20px;
+  color: aliceblue;
 }
