@@ -10,5 +10,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 app.use(flash());
 
-
+var mongoose = require('mongoose');
+mongoose.connect('mongodb://localhost/family-tree');
 
