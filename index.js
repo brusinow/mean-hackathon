@@ -27,10 +27,20 @@ app.get('/', function(req, res) {
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 
             var $ = cheerio.load(html);
-            $('.calendar-post-row').filter(function(){
-            var data = $(this);
-            console.log(data);
+
+            //console.log($('.calendar-post'));
+
+            $('.calendar-post').map(function(i, value) {
+              var str = $(value).find('.calendar-post-left .calendar-post-title a').text();
+              // var date = 
+              console.log(str);
             });
+
+
+            // $('.calendar-post').filter(function(){
+            //   var data = $(this);
+            //   console.log(data.children(".calendar-post-left .calendar-post-title a"));
+            // });
             // Finally, we'll define the variables we're going to capture
            //  for (i=0;i<data.length;i++)
            //   var title, date, category, location, price;
