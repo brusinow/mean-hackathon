@@ -21,13 +21,11 @@ eventApp.controller('EventShowCtrl', ['$scope', '$stateParams', 'Events',
   $scope.event = {};
   Events.get({id: $stateParams.id}, function success(data){
     $scope.event = data;
-  }, 
-    function error(data){
+  }, function error(data){
       console.log(data);
     })
-
-
   }])
+
 
 }])
 
@@ -83,6 +81,9 @@ eventApp.controller('EventShowCtrl', ['$scope', '$stateParams', 'Events',
     $uibModalInstance.dismiss('cancel');
   };
 });
+// =======
+// }]);
+
 
 
 
