@@ -2,14 +2,17 @@ var express= require('express');
 var request = require('request');
 var cheerio = require('cheerio');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var Event = require('./models/event');
 var app = express();
 
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/3000');
+mongoose.connect('mongodb://localhost/fivethings');
+
+
 
 app.get('/', function(req, res) {
     url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
@@ -32,6 +35,7 @@ app.get('/', function(req, res) {
             //console.log($('.calendar-post'));
 
             $('.calendar-post').map(function(i, value) {
+
               var title = $(value).find('.calendar-post-left .calendar-post-title a').text();
               // var titleParse = title.replace(/([\\n]+[\s]+)/ig, "TESTING THIS OUT");
               var date = $(value).find('.calendar-post-date').text();
@@ -51,37 +55,15 @@ app.get('/', function(req, res) {
                   "image": image
               };
               results.push(item);
-              // for (i=0;i<title.length;i++){
-              //   var item = {
-              //     "title": title[i], 
-              //     "date": date[i], 
-              //     "location": location[i], 
-              //     "price": price[i], 
-              //     "category": category[i], 
-              //     "link": link[i],
-              //     "image": image[i]
-              //   };
-              //   results.push(item);
-              
-              // }
-              // console.log("results are: ",results);
             });
-
             console.log(results);
-
-
-            // $('.calendar-post').filter(function(){
-            //   var data = $(this);
-            //   console.log(data.children(".calendar-post-left .calendar-post-title a"));
-            // });
-            // Finally, we'll define the variables we're going to capture
-           //  for (i=0;i<data.length;i++)
-           //   var title, date, category, location, price;
-           //   var json = { title : "", date : "", category : "", location : "", price : ""};
-           // }
         }
     })
-    res.send('');
+    res.send('haha'); 
+});
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'static/index.html'));
 });
 
 app.listen(3000);
