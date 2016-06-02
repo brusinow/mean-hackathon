@@ -10,8 +10,6 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
 mongoose.connect('mongodb://localhost/fivethings');
-
-
     
 
 app.get('/api', function(req, res) {
@@ -30,7 +28,6 @@ app.get('/api', function(req, res) {
     var todayDate = year + '-' + month + '-' + date;
 
     var url = 'http://www.thestranger.com/events//' + todayDate + '?picks=true';
-    // url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
 
     request(url, function(error, response, html){
 
@@ -64,10 +61,9 @@ app.get('/api', function(req, res) {
               });
 
                var title = newEvent.title; 
-
+               //checking if there is a matching event in the db
                Event.findOne({ "title" : title }, function (err, event) {
                     if (err) return handleError(err);
-                    // console.log("inside find, event.title: " + event.title);
                    var dbTitle = event.title;
                     console.log("dbTitle inside find: " + dbTitle); 
                     if(dbTitle !== title){
