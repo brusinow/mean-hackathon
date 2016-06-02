@@ -32,7 +32,6 @@ app.get('/api', function(req, res) {
     request(url, function(error, response, html){
 
         // First we'll check to make sure no errors occurred when making the request
-
         if(!error){
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 
@@ -60,6 +59,7 @@ app.get('/api', function(req, res) {
                   "image": image
               });
 
+
                var title = newEvent.title; 
                //checking if there is a matching event in the db
                Event.findOne({ "title" : title }, function (err, event) {
@@ -80,6 +80,14 @@ app.get('/api', function(req, res) {
         }
     })
     res.send('');
+});
+
+app.get('/api/results', function(req, res) {
+  Event.find({}, function(err, events) {
+    if (err) return res.send(err);
+    res.send(events);
+    console.log(events);
+  });
 });
 
 app.listen(3000);
