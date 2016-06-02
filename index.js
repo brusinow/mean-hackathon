@@ -25,25 +25,49 @@ app.get('/', function(req, res) {
         if(!error){
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 
-            var $ = cheerio.load(html);
+            var $ = cheerio.load(html, {normalizeWhitespace: true});
+
+            var results = [];
 
             //console.log($('.calendar-post'));
 
             $('.calendar-post').map(function(i, value) {
               var title = $(value).find('.calendar-post-left .calendar-post-title a').text();
+              // var titleParse = title.replace(/([\\n]+[\s]+)/ig, "TESTING THIS OUT");
               var date = $(value).find('.calendar-post-date').text();
               var location = $(value).find('.calendar-post-neighborhood').text();
               var price = $(value).find('.calendar-post-event-price').text();
               var category = $(value).find('.calendar-category').text();
               var link = $(value).find('.calendar-post-title a').attr("href");
               var image = $(value).find('.calendar-post-image img').attr("src");
-              var results = [];
-              for (i=0;i<title.length;i++){
-                var item = {"title": title[i], "date": date[i], "location": location[i], "price": price[i], "category": category[i], "link": link[i], "image": image[i]};
-                results.push(item);
-              }
-              console.log("results are: ",results);
+              // console.log(typeof image);
+              var item = {
+                  "title": title, 
+                  "date": date, 
+                  "location": location, 
+                  "price": price, 
+                  "category": category, 
+                  "link": link,
+                  "image": image
+              };
+              results.push(item);
+              // for (i=0;i<title.length;i++){
+              //   var item = {
+              //     "title": title[i], 
+              //     "date": date[i], 
+              //     "location": location[i], 
+              //     "price": price[i], 
+              //     "category": category[i], 
+              //     "link": link[i],
+              //     "image": image[i]
+              //   };
+              //   results.push(item);
+              
+              // }
+              // console.log("results are: ",results);
             });
+
+            console.log(results);
 
 
             // $('.calendar-post').filter(function(){
