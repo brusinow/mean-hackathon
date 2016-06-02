@@ -10,20 +10,20 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
 // mongolabs stuff for launch - trying various databases to connect to
-var uristring =
-    process.env.MONGOLAB_URI ||
-    process.env.MONGOHQ_URL ||
-    'mongodb://localhost/HelloMongoose';
+// var uristring =
+//     process.env.MONGOLAB_URI ||
+//     process.env.MONGOHQ_URL ||
+//     'mongodb://localhost/HelloMongoose';
 
-    // improves errors for heroku troubleshooting bb 
-  mongoose.connect(uristring, function (err, res) {
-  if (err) {
-     console.log ('ERROR connecting to: ' + uristring + '. ' + err);
-  } else {
-    console.log ('Succeeded connected to: ' + uristring);
-  }
-  });
-    
+//     // improves errors for heroku troubleshooting bb 
+//   mongoose.connect(uristring, function (err, res) {
+//   if (err) {
+//      console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+//   } else {
+//     console.log ('Succeeded connected to: ' + uristring);
+//   }
+//   });
+mongoose.connect('mongodb://localhost/fivethings');  
 
 app.get('/api', function(req, res) {
     var today = new Date();
