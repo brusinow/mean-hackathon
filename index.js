@@ -10,9 +10,24 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
 mongoose.connect('mongodb://localhost/fivethings');
+    
 
 app.get('/api', function(req, res) {
-    url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
+    var today = new Date();
+    var date = today.getDate();
+        if (date < 10) {
+        date = '0' + date;
+        }
+    var month = today.getMonth(); // month (in integer 0-11)
+        month = month + 1;
+        if (month < 10) {
+        month = '0'+ month;
+        }
+
+    var year = today.getFullYear();
+    var todayDate = year + '-' + month + '-' + date;
+
+    var url = 'http://www.thestranger.com/events//' + todayDate + '?picks=true';
 
     request(url, function(error, response, html){
 
@@ -22,7 +37,7 @@ app.get('/api', function(req, res) {
 
             var $ = cheerio.load(html, {normalizeWhitespace: true});
 
-            //console.log($('.calendar-post'));
+            
 
             $('.calendar-post').map(function(i, value) {
               var title = $(value).find('.calendar-post-left .calendar-post-title a').text();
@@ -33,7 +48,7 @@ app.get('/api', function(req, res) {
               var link = $(value).find('.calendar-post-title a').attr("href");
               var image = $(value).find('.calendar-post-image img').attr("src");
 
-          
+              //creating a new event  
               var newEvent = Event({
                   "title": title, 
                   "location": location, 
@@ -43,10 +58,21 @@ app.get('/api', function(req, res) {
                   "link": link,
                   "image": image
               });
-                // newEvent.save(function(err) {
-                // if (err) console.log(err);
-                // console.log('Event created!');
-                // });
+
+
+               var title = newEvent.title; 
+               //checking if there is a matching event in the db
+               Event.findOne({ "title" : title }, function (err, event) {
+                    if (err) return handleError(err);
+                   var dbTitle = event.title;
+                    console.log("dbTitle inside find: " + dbTitle); 
+                    if(dbTitle !== title){
+                        newEvent.save(function(err) {
+                        if (err) console.log(err);
+                        console.log('Event created!');
+                        });
+                    }
+                    });
 
             });
           
