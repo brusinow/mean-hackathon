@@ -2,7 +2,13 @@
 <h1 class="center"> Today's Events </h1>
 
 <ul>
-  <li class="well" ng-repeat="event in events track by $index"><button class="btn btn-primary"></button>{{event.title}}</li>
+
+  <li class="well" ng-repeat="result in results | limitTo:6 track by $index" ng-if="$index > 0">
+  <img ng-src="{{result.image}}" alt="{{result.title}}" />
+  <button class="btn btn-primary">{{result.title}}</button>
+  <p>{{result.location}} / {{result.price}}</p>
+  </li>
+
 </ul>
 
 

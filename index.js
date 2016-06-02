@@ -43,7 +43,13 @@ app.get('/api', function(req, res) {
               var title = $(value).find('.calendar-post-left .calendar-post-title a').text();
               var date = $(value).find('.calendar-post-date').text();
               var location = $(value).find('.calendar-post-neighborhood').text();
+              // if (!location){
+              //   location = null;
+              // }
               var price = $(value).find('.calendar-post-event-price').text();
+              // if (!price){
+              // price = null;
+              // }
               var category = $(value).find('.calendar-category').text();
               var link = $(value).find('.calendar-post-title a').attr("href");
               var image = $(value).find('.calendar-post-image img').attr("src");
