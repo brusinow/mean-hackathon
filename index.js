@@ -15,8 +15,22 @@ mongoose.connect('mongodb://localhost/fivethings');
     
 
 app.get('/api', function(req, res) {
+    var today = new Date();
+    var date = today.getDate();
+        if (date < 10) {
+        date = '0' + date;
+        }
+    var month = today.getMonth(); // month (in integer 0-11)
+        month = month + 1;
+        if (month < 10) {
+        month = '0'+ month;
+        }
 
-    url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
+    var year = today.getFullYear();
+    var todayDate = year + '-' + month + '-' + date;
+
+    var url = 'http://www.thestranger.com/events//' + todayDate + '?picks=true';
+    // url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
 
     request(url, function(error, response, html){
 
@@ -38,7 +52,7 @@ app.get('/api', function(req, res) {
               var link = $(value).find('.calendar-post-title a').attr("href");
               var image = $(value).find('.calendar-post-image img').attr("src");
 
-          
+              //creating a new event  
               var newEvent = Event({
                   "title": title, 
                   "location": location, 
@@ -48,10 +62,21 @@ app.get('/api', function(req, res) {
                   "link": link,
                   "image": image
               });
-                newEvent.save(function(err) {
-                if (err) console.log(err);
-                console.log('Event created!');
-                });
+
+               var title = newEvent.title; 
+
+               Event.findOne({ "title" : title }, function (err, event) {
+                    if (err) return handleError(err);
+                    // console.log("inside find, event.title: " + event.title);
+                   var dbTitle = event.title;
+                    console.log("dbTitle inside find: " + dbTitle); 
+                    if(dbTitle !== title){
+                        newEvent.save(function(err) {
+                        if (err) console.log(err);
+                        console.log('Event created!');
+                        });
+                    }
+                    });
 
             });
           
