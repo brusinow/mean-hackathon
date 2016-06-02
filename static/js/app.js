@@ -1,12 +1,21 @@
-var eventApp = angular.module('eventApp', []);
-eventApp.controller('HomeCtrl', ['$scope', '$http', function($scope, $http){
-  // does our api  call
-  $http({url: '/api'}).then(function success(data){
-    $scope.data = data;
-    console.log(data);
-  }, function error(error){
-    $scope.error = error;
+var eventApp = angular.module('eventApp', ['EventCtrls', 'ui.router'])
+
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+  $urlRouterProvider.otherwise('/');
+
+  $stateProvider
+  .state('home', {
+    url: '/',
+    templateUrl: 'views/home.html',
+    controller: 'HomeCtrl'
   })
-  
+  .state('about', {
+    url: '/about',
+    templateUrl: 'views/about.html',
+  })
+  .state('event', {
+    url: '/event',
+    templateUrl: 'views/events.html'
+  })
 
 }]);
