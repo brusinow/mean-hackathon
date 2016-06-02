@@ -8,8 +8,14 @@ var eventApp = angular.module('eventApp', ['EventCtrls', 'ui.router'])
     url: '/',
     templateUrl: 'views/home.html',
     controller: 'HomeCtrl'
-  });
+  })
   .state('about', {
     url: '/about',
     templateUrl: 'views/about.html',
-  });
+  })
+  .state('event', {
+    url: '/event',
+    templateUrl: 'views/events.html'
+  })
+
+}]);
