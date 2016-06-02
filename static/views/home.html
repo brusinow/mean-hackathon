@@ -2,14 +2,23 @@
 <h1 class="center"> Today's Events </h1>
 
 <ul>
-  <li class="well" ng-repeat="result in results | limitTo:6 track by $index" ng-if="$index > 0">
-  <img ng-src="{{result.image}}" alt="{{result.title}}" />
-  <button class="btn btn-primary">{{result.title}}</button>
-  <p>{{result.location}} / {{result.price}}</p>
+  <div class="row">
+
+    <li class="well" ng-repeat="result in results | limitTo:6 track by $index" ng-if="$index > 0">
+
+    <img ng-src="{{result.image}}" alt="{{result.title}}" />
+
+    <p class="bigboy">{{result.title}}<p>
+    <p> {{result.date}} </p>
+    <p>{{result.location}} / {{result.price}}</p>
+    <p> {{rersult.category}}</p>
+
   </li>
+
+  </div>
 </ul>
 
 
-<div class="center">
+<!-- <div class="center">
   <button class="btn btn-lg btn-primary refresh">&#8635;</button>
-</div>
+</div> -->
