@@ -4,8 +4,12 @@ var eventApp = angular.module('eventApp', ['EventCtrls', 'ui.router'])
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
-  .state('main', {
+  .state('home', {
     url: '/',
-    templateUrl: 'views/films.html',
-    controller: 'FilmsCtrl'
+    templateUrl: 'views/home.html',
+    controller: 'HomeCtrl'
+  });
+  .state('about', {
+    url: '/about',
+    templateUrl: 'views/about.html',
   });
