@@ -1,8 +1,17 @@
 
 <h1 class="center"> Today's Events </h1>
 
-<ul>
+
+
+ <!--  <li class="well" ng-repeat="result in results | limitTo:6 track by $index" ng-if="$index > 0">
+  <img ng-src="{{result.image}}" alt="{{result.title}}" />
+  <button class="btn btn-primary">{{result.title}}</button>
+  <p>{{result.location}} / {{result.price}}</p>
+  </li> -->
+
+
   <div class="row">
+  <ul>
 
     <li class="well" ng-repeat="result in results | limitTo:6 track by $index" ng-if="$index > 0">
 
@@ -13,10 +22,33 @@
     <p>{{result.location}} / {{result.price}}</p>
     <p> {{rersult.category}}</p>
 
-  </li>
+    </li>
+    </ul>
 
   </div>
-</ul>
+
+<div ng-controller="ModalDemoCtrl">
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Event Detail</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li>{{result.title}}Title</li>
+                <li>{{result.description}}Location</li>
+                <li>{{result.image}}Image</li>
+            </ul>
+            <p>TEST</p>
+            Link: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+</div>
 
 
 <!-- <div class="center">
