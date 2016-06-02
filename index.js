@@ -23,7 +23,7 @@ var uristring =
     console.log ('Succeeded connected to: ' + uristring);
   }
   });
-    
+// mongoose.connect('mongodb://localhost/fivethings');  
 
 app.get('/api', function(req, res) {
     var today = new Date();
@@ -80,34 +80,30 @@ app.get('/api', function(req, res) {
 
               
                var title = newEvent.title; 
-               console.log(title);
 
+              console.log(title);
+              //checking if there is a matching event in the db
+              Event.findOne({ "title" : title }, function (err, event) {
+                   if (err) return handleError(err);
 
-               // newEvent.save(function(err){
-               //  if(err) console.log(err);
-               //  console.log('Event created!');
-               // })
-               //checking if there is a matching event in the db
-               Event.findOne({ "title" : title }, function (err, event) {
-                    if (err) return handleError(err);
+                   if (event !== null) {
 
-                    if (event !== null) {
+                       var dbTitle = event.title;
+                       console.log(dbTitle);
 
-                        var dbTitle = event.title;
-                        console.log(dbTitle);
+                       if(dbTitle !== title){
+                       console.log("new event: " + title);
+                       console.log("db event: " + dbTitle);
 
-                        if(dbTitle !== title){
-                        console.log("new event: " + title);
-                        console.log("db event: " + dbTitle);
+                       newEvent.save(function(err) {
+                       if (err) console.log(err);
+                       console.log('Event created!');
+                       });
+                       }
+                   }
 
-                        newEvent.save(function(err) {
-                        if (err) console.log(err);
-                        console.log('Event created!');
-                        });
-                        }
-                    }
+                   });
 
-                    });
 
             });
           
