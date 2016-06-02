@@ -15,6 +15,7 @@ mongoose.connect('mongodb://localhost/fivethings');
 
 
 app.get('/', function(req, res) {
+    
     url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
 
     // The structure of our request call
@@ -30,7 +31,7 @@ app.get('/', function(req, res) {
 
             var $ = cheerio.load(html);
 
-            //console.log($('.calendar-post'));
+            
 
             $('.calendar-post').map(function(i, value) {
 
