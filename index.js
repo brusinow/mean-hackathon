@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var Event = require('./models/event');
 var app = express();
 
-app.set('view engine', 'ejs');
+// app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
@@ -14,7 +14,7 @@ mongoose.connect('mongodb://localhost/fivethings');
 
 
 
-app.get('/', function(req, res) {
+app.get('/api', function(req, res) {
     url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
 
     // The structure of our request call
@@ -59,11 +59,7 @@ app.get('/', function(req, res) {
             console.log(results);
         }
     })
-    res.send('haha'); 
-});
-
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'static/index.html'));
+    res.send(''); 
 });
 
 app.listen(3000);
