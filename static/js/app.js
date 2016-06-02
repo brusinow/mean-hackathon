@@ -13,9 +13,10 @@ var eventApp = angular.module('eventApp', ['EventCtrls', 'ui.router'])
     url: '/about',
     templateUrl: 'views/about.html',
   })
-  .state('event', {
-    url: '/event',
-    templateUrl: 'views/events.html'
+  .state('showEvent', {
+    url: '/events/:id',
+    templateUrl: 'views/events.html',
+    controller: 'EventShowCtrl'
   })
 
 }]);
