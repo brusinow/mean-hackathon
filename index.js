@@ -6,21 +6,17 @@ var mongoose = require('mongoose');
 var Event = require('./models/event');
 var app = express();
 
-app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
 mongoose.connect('mongodb://localhost/fivethings');
 
 
-
-app.get('/', function(req, res) {
     
-    url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
 
-    // The structure of our request call
-    // The first parameter is our URL
-    // The callback function takes 3 parameters, an error, response status code and the html
+app.get('/api', function(req, res) {
+
+    url = 'http://www.thestranger.com/events//2016-06-01?picks=true';
 
     request(url, function(error, response, html){
 
@@ -29,12 +25,11 @@ app.get('/', function(req, res) {
         if(!error){
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
 
-            var $ = cheerio.load(html);
+            var $ = cheerio.load(html, {normalizeWhitespace: true});
 
             
 
             $('.calendar-post').map(function(i, value) {
-
               var title = $(value).find('.calendar-post-left .calendar-post-title a').text();
               var date = $(value).find('.calendar-post-date').text();
               var location = $(value).find('.calendar-post-neighborhood').text();
@@ -42,32 +37,28 @@ app.get('/', function(req, res) {
               var category = $(value).find('.calendar-category').text();
               var link = $(value).find('.calendar-post-title a').attr("href");
               var image = $(value).find('.calendar-post-image img').attr("src");
-              var results = [];
-              for (i=0;i<title.length;i++){
-                var item = {"title": title[i], "date": date[i], "location": location[i], "price": price[i], "category": category[i], "link": link[i], "image": image[i]};
-                results.push(item);
-              }
-              console.log("results are: ",results);
+
+          
+              var newEvent = Event({
+                  "title": title, 
+                  "location": location, 
+                  "date": date, 
+                  "price": price, 
+                  "category": category, 
+                  "link": link,
+                  "image": image
+              });
+                newEvent.save(function(err) {
+                if (err) console.log(err);
+                console.log('Event created!');
+                });
 
             });
+          
 
-
-            // $('.calendar-post').filter(function(){
-            //   var data = $(this);
-            //   console.log(data.children(".calendar-post-left .calendar-post-title a"));
-            // });
-            // Finally, we'll define the variables we're going to capture
-           //  for (i=0;i<data.length;i++)
-           //   var title, date, category, location, price;
-           //   var json = { title : "", date : "", category : "", location : "", price : ""};
-           // }
         }
     })
-    res.send('haha'); 
-});
-
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'static/index.html'));
+    res.send('');
 });
 
 app.listen(3000);
