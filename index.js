@@ -59,18 +59,24 @@ app.get('/api', function(req, res) {
                   "image": image
               });
 
-
+              
                var title = newEvent.title; 
+               // console.log(title);
                //checking if there is a matching event in the db
                Event.findOne({ "title" : title }, function (err, event) {
                     if (err) return handleError(err);
-                   var dbTitle = event.title;
-                    console.log("dbTitle inside find: " + dbTitle); 
-                    if(dbTitle !== title){
+                    if (event !== null) {
+
+                    var dbTitle = event.title;
+
+                    if(dbTitle === title){
+                        console.log("new event: " + title);
+                        console.log("db event: " + dbTitle);
                         newEvent.save(function(err) {
                         if (err) console.log(err);
                         console.log('Event created!');
                         });
+                    }
                     }
                     });
 
