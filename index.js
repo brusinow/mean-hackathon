@@ -81,6 +81,12 @@ app.get('/api', function(req, res) {
               
                var title = newEvent.title; 
                console.log(title);
+
+
+               // newEvent.save(function(err){
+               //  if(err) console.log(err);
+               //  console.log('Event created!');
+               // })
                //checking if there is a matching event in the db
                Event.findOne({ "title" : title }, function (err, event) {
                     if (err) return handleError(err);
