@@ -4,7 +4,13 @@ eventApp.controller('HomeCtrl', ['$scope', '$http', function($scope, $http){
   // does our api  call
   $http({url: '/api'}).then(function success(data){
     $scope.data = data;
-    console.log(data);
+    // console.log(data);
+    return $http({url: '/api/results'}).then(function success(results){
+      $scope.results = results;
+      console.log("RESULTS ARE: ",results);
+    }, function error(error){
+      console.log('error!');
+    })
   }, function error(error){
     $scope.error = error;
   });
@@ -25,3 +31,8 @@ eventApp.controller('EventShowCtrl', ['$scope', '$stateParams', 'Events',
   }])
 
 }]);
+
+
+
+
+
