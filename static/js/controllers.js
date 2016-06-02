@@ -7,7 +7,7 @@ eventApp.controller('HomeCtrl', ['$scope', '$http', function($scope, $http){
     // console.log(data);
     return $http({url: '/api/results'}).then(function success(results){
       $scope.results = results.data;
-      console.log("RESULTS ARE: ",results.data);
+      console.log("RESULTS ARE: ", results.data);
     }, function error(error){
       console.log('error!');
     })

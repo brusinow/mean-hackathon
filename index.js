@@ -9,21 +9,7 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
-// mongolabs stuff for launch - trying various databases to connect to
-var uristring =
-    process.env.MONGOLAB_URI ||
-    process.env.MONGOHQ_URL ||
-    'mongodb://localhost/HelloMongoose';
-
-    // improves errors for heroku troubleshooting bb 
-  mongoose.connect(uristring, function (err, res) {
-  if (err) {
-     console.log ('ERROR connecting to: ' + uristring + '. ' + err);
-  } else {
-    console.log ('Succeeded connected to: ' + uristring);
-  }
-  });
-    
+mongoose.connect('mongodb://localhost/fivethings');
 
 app.get('/api', function(req, res) {
     var today = new Date();
@@ -83,19 +69,16 @@ app.get('/api', function(req, res) {
                //checking if there is a matching event in the db
                Event.findOne({ "title" : title }, function (err, event) {
                     if (err) return handleError(err);
-                   // var dbTitle = event.title;
-                   //  console.log("dbTitle inside find: " + dbTitle); 
-                   //  if(dbTitle !== title){
+                   var dbTitle = event.title;
+                    console.log("dbTitle inside find: " + dbTitle); 
+                    if(dbTitle !== title){
                         newEvent.save(function(err) {
                         if (err) console.log(err);
                         console.log('Event created!');
                         });
-                   //  }
-                    });
-
+                    }
+                  });
             });
-          
-
         }
     })
     res.send('');
