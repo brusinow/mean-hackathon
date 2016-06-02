@@ -44,10 +44,10 @@ app.get('/api', function(req, res) {
                   "link": link,
                   "image": image
               });
-                newEvent.save(function(err) {
-                if (err) console.log(err);
-                console.log('Event created!');
-                });
+                // newEvent.save(function(err) {
+                // if (err) console.log(err);
+                // console.log('Event created!');
+                // });
 
             });
           
