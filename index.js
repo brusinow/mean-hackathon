@@ -9,7 +9,20 @@ var app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(express.static(__dirname + '/static'));
 
-mongoose.connect('mongodb://localhost/fivethings');
+// mongolabs stuff for launch - trying various databases to connect to
+var uristring =
+    process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL ||
+    'mongodb://localhost/HelloMongoose';
+
+    // improves errors for heroku troubleshooting bb 
+  mongoose.connect(uristring, function (err, res) {
+  if (err) {
+     console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+  } else {
+    console.log ('Succeeded connected to: ' + uristring);
+  }
+  });
     
 
 app.get('/api', function(req, res) {
@@ -43,7 +56,13 @@ app.get('/api', function(req, res) {
               var title = $(value).find('.calendar-post-left .calendar-post-title a').text();
               var date = $(value).find('.calendar-post-date').text();
               var location = $(value).find('.calendar-post-neighborhood').text();
+              // if (!location){
+              //   location = null;
+              // }
               var price = $(value).find('.calendar-post-event-price').text();
+              // if (!price){
+              // price = null;
+              // }
               var category = $(value).find('.calendar-category').text();
               var link = $(value).find('.calendar-post-title a').attr("href");
               var image = $(value).find('.calendar-post-image img').attr("src");
@@ -61,23 +80,27 @@ app.get('/api', function(req, res) {
 
               
                var title = newEvent.title; 
-               // console.log(title);
+               console.log(title);
                //checking if there is a matching event in the db
                Event.findOne({ "title" : title }, function (err, event) {
                     if (err) return handleError(err);
+
                     if (event !== null) {
 
-                    var dbTitle = event.title;
+                        var dbTitle = event.title;
+                        console.log(dbTitle);
 
-                    if(dbTitle === title){
+                        if(dbTitle !== title){
                         console.log("new event: " + title);
                         console.log("db event: " + dbTitle);
+
                         newEvent.save(function(err) {
                         if (err) console.log(err);
                         console.log('Event created!');
                         });
+                        }
                     }
-                    }
+
                     });
 
             });
@@ -96,4 +119,4 @@ app.get('/api/results', function(req, res) {
   });
 });
 
-app.listen(3000);
+app.listen(process.env.PORT || 3000)

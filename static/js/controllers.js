@@ -6,8 +6,8 @@ eventApp.controller('HomeCtrl', ['$scope', '$http', function($scope, $http){
     $scope.data = data;
     // console.log(data);
     return $http({url: '/api/results'}).then(function success(results){
-      $scope.results = results;
-      console.log("RESULTS ARE: ",results);
+      $scope.results = results.data;
+      console.log("RESULTS ARE: ",results.data);
     }, function error(error){
       console.log('error!');
     })
@@ -21,15 +21,12 @@ eventApp.controller('EventShowCtrl', ['$scope', '$stateParams', 'Events',
   $scope.event = {};
   Events.get({id: $stateParams.id}, function success(data){
     $scope.event = data;
-  }, 
-    function error(data){
+  }, function error(data){
       console.log(data);
     })
-
-
   }])
-
 }]);
+
 
 
 
