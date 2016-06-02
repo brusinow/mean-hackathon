@@ -1,4 +1,4 @@
-var eventApp = angular.module('eventApp', ['EventCtrls', 'ui.router'])
+var eventApp = angular.module('eventApp', ['EventCtrls', 'ui.router', 'ui.bootstrap'])
 
 .config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
   $urlRouterProvider.otherwise('/');

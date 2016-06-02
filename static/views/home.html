@@ -1,7 +1,11 @@
-<h1> Today's Events </h1>
+
+<h1 class="center"> Today's Events </h1>
 
 <ul>
   <li class="well" ng-repeat="event in events track by $index"><button class="btn btn-primary"></button>{{event.title}}</li>
 </ul>
 
-<button class="refresh">REFRESH</button>
+
+<div class="center">
+  <button class="btn btn-lg btn-primary refresh">&#8635;</button>
+</div>
