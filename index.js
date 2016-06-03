@@ -13,7 +13,7 @@ app.use(express.static(__dirname + '/static'));
 var uristring =
     process.env.MONGOLAB_URI ||
     process.env.MONGOHQ_URL ||
-    'mongodb://localhost/HelloMongoose';
+    'mongodb://localhost/fivethings';
 
     // improves errors for heroku troubleshooting bb 
   mongoose.connect(uristring, function (err, res) {
@@ -47,7 +47,7 @@ app.get('/api', function(req, res) {
         // First we'll check to make sure no errors occurred when making the request
         if(!error){
             // Next, we'll utilize the cheerio library on the returned html which will essentially give us jQuery functionality
-
+            // console.log("SCRAPING");
             var $ = cheerio.load(html, {normalizeWhitespace: true});
 
             
@@ -78,30 +78,29 @@ app.get('/api', function(req, res) {
                   "image": image
               });
 
-
+              
                var title = newEvent.title; 
+               // newEvent.save(function(err){
+               //  if (err) console.log(err);
+               //  console.log('Event Created!');
+               // });
+
               console.log(title);
-              //checking if there is a matching event in the db
+              // checking if there is a matching event in the db
               Event.findOne({ "title" : title }, function (err, event) {
                    if (err) return handleError(err);
 
                    if (event !== null) {
 
-                       var dbTitle = event.title;
-                       console.log(dbTitle);
-
-                       if(dbTitle !== title){
-                       console.log("new event: " + title);
-                       console.log("db event: " + dbTitle);
-
-                       newEvent.save(function(err) {
+                   } else {
+                     newEvent.save(function(err) {
                        if (err) console.log(err);
                        console.log('Event created!');
                        });
-                       }
                    }
 
                    });
+
 
             });
           
